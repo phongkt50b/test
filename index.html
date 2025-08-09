@@ -3,62 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Tính Phí Bảo Hiểm AIA</title>
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <link href="style.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Công Cụ Minh Họa Phí Bảo Hiểm</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chrono/1.0.5/chrono.min.js"></script>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800">
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <header class="flex items-center justify-between pb-6 border-b-2 border-red-600 mb-6">
-            <img src="https://www.aia.com.vn/content/dam/group-wise/images/system/icons/aia-logo-red.svg" alt="AIA Logo" class="h-8">
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 text-right">Công Cụ Minh Họa Phí Bảo Hiểm</h1>
+<body class="bg-gray-50">
+    <div class="container max-w-7xl mx-auto p-6">
+        <header class="mb-6 text-center">
+            <img src="/assets/aia-logo.png" alt="AIA Logo" class="h-12 mx-auto mb-4">
+            <h1 class="text-3xl font-bold text-gray-800">Công Cụ Minh Họa Phí Bảo Hiểm</h1>
         </header>
 
-        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-6">
-                
-                <div id="main-person-container" class="person-container space-y-6">
-                    <!-- Thông tin người được bảo hiểm chính -->
-                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h2 class="text-xl font-bold text-aia-red mb-4">1. Thông Tin Người Được Bảo Hiểm Chính</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="name-main" class="font-medium text-gray-700 block mb-1">Họ và Tên</label>
-                                <input type="text" id="name-main" class="form-input name-input" placeholder="Nguyễn Văn A">
-                            </div>
-                            <div>
-                                <label for="dob-main" class="font-medium text-gray-700 block mb-1">Ngày sinh</label>
-                                <input type="text" id="dob-main" class="form-input dob-input" placeholder="DD/MM/YYYY">
-                            </div>
-                            <div>
-                                <label for="gender-main" class="font-medium text-gray-700 block mb-1">Giới tính</label>
-                                <select id="gender-main" class="form-select gender-select">
-                                    <option value="Nam">Nam</option>
-                                    <option value="Nữ">Nữ</option>
-                                </select>
-                            </div>
-                            <div class="flex items-end space-x-4">
-                                <p class="text-lg">Tuổi: <span id="age-main" class="font-bold text-aia-red age-span">0</span></p>
-                            </div>
-                            <div class="relative">
-                                <label for="occupation-input-main" class="font-medium text-gray-700 block mb-1">Nghề nghiệp</label>
-                                <input type="text" id="occupation-input-main" class="form-input occupation-input" placeholder="Gõ để tìm nghề nghiệp...">
-                                <div class="occupation-autocomplete absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 hidden max-h-60 overflow-y-auto"></div>
-                            </div>
-                            <div class="flex items-end space-x-4">
-                                <p class="text-lg">Nhóm nghề: <span id="risk-group-main" class="font-bold text-aia-red risk-group-span">...</span></p>
-                            </div>
-                        </div>
+        <div class="space-y-8">
+            <!-- Section 1: Thông Tin Người Được Bảo Hiểm Chính -->
+            <section id="main-person-container" class="person-container space-y-6 bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-gray-800">1. Thông Tin Người Được Bảo Hiểm Chính</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="name-main" class="font-medium text-gray-700 block mb-1">Họ và Tên</label>
+                        <input type="text" id="name-main" class="form-input name-input" placeholder="Trần Thị B">
+                        <p class="error-message text-red-600 text-sm mt-1 hidden"></p>
+                        <p class="input-hint text-gray-500 text-sm mt-1">Nhập họ và tên đầy đủ</p>
+                    </div>
+                    <div>
+                        <label for="dob-main" class="font-medium text-gray-700 block mb-1">Ngày sinh</label>
+                        <input type="text" id="dob-main" class="form-input dob-input" placeholder="DD/MM/YYYY">
+                        <p class="error-message text-red-600 text-sm mt-1 hidden"></p>
+                        <p class="input-hint text-gray-500 text-sm mt-1">Nhập theo DD/MM/YYYY</p>
+                    </div>
+                    <div>
+                        <label for="gender-main" class="font-medium text-gray-700 block mb-1">Giới tính</label>
+                        <select id="gender-main" class="form-select gender-select">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end space-x-4">
+                        <p class="text-lg">Tuổi: <span id="age-main" class="font-bold text-aia-red age-span">0</span></p>
+                    </div>
+                    <div class="relative">
+                        <label for="occupation-input-main" class="font-medium text-gray-700 block mb-1">Nghề nghiệp</label>
+                        <input type="text" id="occupation-input-main" class="form-input occupation-input" placeholder="Gõ để tìm nghề nghiệp...">
+                        <p class="error-message text-red-600 text-sm mt-1 hidden"></p>
+                        <p class="input-hint text-gray-500 text-sm mt-1">Chọn nghề nghiệp từ danh sách</p>
+                        <div class="occupation-autocomplete absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 hidden max-h-60 overflow-y-auto"></div>
+                    </div>
+                    <div class="flex items-end space-x-4">
+                        <p class="text-lg">Nhóm nghề: <span id="risk-group-main" class="font-bold text-aia-red risk-group-span">...</span></p>
                     </div>
                 </div>
+            </section>
 
-                <!-- Sản phẩm chính -->
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                    <h2 class="text-xl font-bold text-aia-red mb-4">2. Lựa Chọn Sản Phẩm Chính</h2>
-                    <div id="main-product-container" class="space-y-3">
+            <!-- Section 2: Lựa Chọn Sản Phẩm Chính -->
+            <section class="space-y-6 bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-gray-800">2. Lựa Chọn Sản Phẩm Chính</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="main-product" class="font-medium text-gray-700 block mb-1">Sản phẩm chính</label>
                         <select id="main-product" class="form-select">
                             <option value="">-- Chọn sản phẩm chính --</option>
                             <option value="PUL_TRON_DOI">PUL Trọn đời</option>
@@ -66,158 +67,190 @@
                             <option value="PUL_5_NAM">PUL 5 năm</option>
                             <option value="KHOE_BINH_AN">MUL - Khoẻ Bình An</option>
                             <option value="VUNG_TUONG_LAI">MUL - Vững Tương Lai</option>
-                            <option value="TRON_TAM_AN">Trọn tâm an</option>
+                            <option value="TRON_TAM_AN">Trọn Tâm An</option>
                             <option value="AN_BINH_UU_VIET">An Bình Ưu Việt</option>
                         </select>
                     </div>
-                    <div id="main-product-options" class="mt-4 space-y-4"></div>
-                    <div id="main-product-fee-display" class="text-right font-bold text-lg text-aia-red mt-2 min-h-[1.75rem]"></div>
+                    <div id="payment-term-container">
+                        <label for="payment-term" class="font-medium text-gray-700 block mb-1">Thời hạn đóng phí</label>
+                        <input type="number" id="payment-term" class="form-input" placeholder="Nhập số năm">
+                        <p class="error-message text-red-600 text-sm mt-1 hidden"></p>
+                        <p class="input-hint text-gray-500 text-sm mt-1"></p>
+                    </div>
+                    <div id="abuv-term-container" class="hidden">
+                        <label for="abuv-term" class="font-medium text-gray-700 block mb-1">Thời hạn đóng phí</label>
+                        <select id="abuv-term" class="form-select">
+                            <option value="5">5 năm</option>
+                            <option value="10">10 năm</option>
+                            <option value="15">15 năm</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="payment-frequency" class="font-medium text-gray-700 block mb-1">Kỳ đóng phí</label>
+                        <select id="payment-frequency" class="form-select">
+                            <option value="yearly">Năm</option>
+                            <option value="quarterly">Quý</option>
+                            <option value="semi-annually">Nửa năm</option>
+                        </select>
+                    </div>
                 </div>
+            </section>
 
-                <!-- Sản phẩm bổ sung -->
-                <div id="main-supp-container" class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                    <h2 class="text-xl font-bold text-aia-red mb-4">3. Lựa Chọn Sản Phẩm Bổ Sung (Cho NĐBH Chính)</h2>
-                    <div class="supplementary-products-container space-y-6">
-                        <div class="product-section health-scl-section hidden">
-                            <label class="flex items-center space-x-3 cursor-pointer">
-                                <input type="checkbox" class="form-checkbox health-scl-checkbox">
-                                <span class="text-lg font-medium text-gray-800">Sức khỏe Bùng Gia Lực</span>
-                            </label>
-                            <div class="product-options hidden mt-3 pl-8 space-y-4 border-l-2 border-gray-200">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="font-medium text-gray-700 block mb-1">Quyền lợi chính (Bắt buộc)</label>
-                                        <select class="form-select health-scl-program" disabled>
-                                            <option value="">-- Chọn chương trình --</option>
-                                            <option value="co_ban">Cơ bản</option>
-                                            <option value="nang_cao">Nâng cao</option>
-                                            <option value="toan_dien">Toàn diện</option>
-                                            <option value="hoan_hao">Hoàn hảo</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="font-medium text-gray-700 block mb-1">Phạm vi địa lý</label>
-                                        <select class="form-select health-scl-scope" disabled>
-                                            <option value="main_vn">Việt Nam</option>
-                                            <option value="main_global">Toàn cầu (trừ Hoa Kỳ)</option>
-                                        </select>
-                                    </div>
+            <!-- Section 3: Lựa Chọn Sản Phẩm Bổ Sung (Cho NĐBH Chính) -->
+            <section id="main-supp-container" class="space-y-6 bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-gray-800">3. Lựa Chọn Sản Phẩm Bổ Sung (Cho NĐBH Chính)</h2>
+                <div class="supplementary-products-container space-y-6">
+                    <!-- Sức khỏe Bùng Gia Lực -->
+                    <div class="product-section health-scl-section">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox health-scl-checkbox">
+                            <span class="text-lg font-medium text-gray-800">Sức khỏe Bùng Gia Lực</span>
+                        </label>
+                        <div class="product-options hidden mt-3 pl-8 space-y-4 border-l-2 border-gray-200">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="font-medium text-gray-700 block mb-1">Quyền lợi chính (Bắt buộc)</label>
+                                    <select class="form-select health-scl-program" disabled>
+                                        <option value="">-- Chọn chương trình --</option>
+                                        <option value="co_ban">Cơ bản</option>
+                                        <option value="nang_cao">Nâng cao</option>
+                                        <option value="toan_dien">Toàn diện</option>
+                                        <option value="hoan_hao">Hoàn hảo</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    <span class="font-medium text-gray-700 block mb-2">Quyền lợi tùy chọn:</span>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="form-checkbox health-scl-outpatient" disabled>
-                                            <span>Điều trị ngoại trú</span>
-                                        </label>
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="form-checkbox health-scl-dental" disabled>
-                                            <span>Chăm sóc nha khoa</span>
-                                        </label>
-                                    </div>
+                                    <label class="font-medium text-gray-700 block mb-1">Phạm vi địa lý</label>
+                                    <select class="form-select health-scl-scope" disabled>
+                                        <option value="main_vn">Việt Nam</option>
+                                        <option value="main_global">Toàn cầu (trừ Hoa Kỳ)</option>
+                                    </select>
                                 </div>
-                                <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
                             </div>
+                            <div>
+                                <span class="font-medium text-gray-700 block mb-2">Quyền lợi tùy chọn:</span>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox health-scl-outpatient" disabled>
+                                        <span>Điều trị ngoại trú</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox health-scl-dental" disabled>
+                                        <span>Chăm sóc nha khoa</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
                         </div>
-                        <div class="product-section bhn-section hidden">
-                            <label class="flex items-center space-x-3 cursor-pointer">
-                                <input type="checkbox" class="form-checkbox bhn-checkbox">
-                                <span class="text-lg font-medium text-gray-800">Bệnh Hiểm Nghèo 2.0</span>
-                            </label>
-                            <div class="product-options hidden mt-3 pl-8 space-y-3 border-l-2 border-gray-200">
-                                <div>
-                                    <label class="font-medium text-gray-700 block mb-1">Số tiền bảo hiểm (STBH)</label>
-                                    <input type="text" class="form-input bhn-stbh" placeholder="VD: 200.000.000">
-                                </div>
-                                <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
+                    </div>
+                    <!-- Bệnh Hiểm Nghèo 2.0 -->
+                    <div class="product-section bhn-section">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox bhn-checkbox">
+                            <span class="text-lg font-medium text-gray-800">Bệnh Hiểm Nghèo 2.0</span>
+                        </label>
+                        <div class="product-options hidden mt-3 pl-8 space-y-3 border-l-2 border-gray-200">
+                            <div>
+                                <label class="font-medium text-gray-700 block mb-1">Số tiền bảo hiểm (STBH)</label>
+                                <input type="text" class="form-input bhn-stbh" placeholder="VD: 500.000.000">
+                                <p class="error-message text-red-600 text-sm mt-1 hidden"></p>
                             </div>
+                            <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
                         </div>
-                        <div class="product-section accident-section hidden">
-                            <label class="flex items-center space-x-3 cursor-pointer">
-                                <input type="checkbox" class="form-checkbox accident-checkbox">
-                                <span class="text-lg font-medium text-gray-800">Bảo hiểm Tai nạn</span>
-                            </label>
-                            <div class="product-options hidden mt-3 pl-8 space-y-3 border-l-2 border-gray-200">
-                                <div>
-                                    <label class="font-medium text-gray-700 block mb-1">Số tiền bảo hiểm (STBH)</label>
-                                    <input type="text" class="form-input accident-stbh" placeholder="VD: 200.000.000">
-                                </div>
-                                <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
+                    </div>
+                    <!-- Bảo hiểm Tai nạn -->
+                    <div class="product-section accident-section">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox accident-checkbox">
+                            <span class="text-lg font-medium text-gray-800">Bảo hiểm Tai nạn</span>
+                        </label>
+                        <div class="product-options hidden mt-3 pl-8 space-y-3 border-l-2 border-gray-200">
+                            <div>
+                                <label class="font-medium text-gray-700 block mb-1">Số tiền bảo hiểm (STBH)</label>
+                                <input type="text" class="form-input accident-stbh" placeholder="VD: 200.000.000">
+                                <p class="error-message text-red-600 text-sm mt-1 hidden"></p>
                             </div>
+                            <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
                         </div>
-                        <div class="product-section hospital-support-section hidden">
-                            <label class="flex items-center space-x-3 cursor-pointer">
-                                <input type="checkbox" class="form-checkbox hospital-support-checkbox">
-                                <span class="text-lg font-medium text-gray-800">Hỗ trợ chi phí nằm viện</span>
-                            </label>
-                            <div class="product-options hidden mt-3 pl-8 space-y-3 border-l-2 border-gray-200">
-                                <div>
-                                    <label class="font-medium text-gray-700 block mb-1">Số tiền hỗ trợ/ngày</label>
-                                    <input type="text" class="form-input hospital-support-stbh" placeholder="VD: 300.000">
-                                    <p class="hospital-support-validation text-sm text-gray-500 mt-1"></p>
-                                </div>
-                                <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
+                    </div>
+                    <!-- Hỗ trợ chi phí nằm viện -->
+                    <div class="product-section hospital-support-section">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox hospital-support-checkbox">
+                            <span class="text-lg font-medium text-gray-800">Hỗ trợ chi phí nằm viện</span>
+                        </label>
+                        <div class="product-options hidden mt-3 pl-8 space-y-3 border-l-2 border-gray-200">
+                            <div>
+                                <label class="font-medium text-gray-700 block mb-1">Số tiền hỗ trợ/ngày</label>
+                                <input type="text" class="form-input hospital-support-stbh" placeholder="VD: 300.000">
+                                <p class="error-message text-red-600 text-sm mt-1 hidden"></p>
+                                <p class="hospital-support-validation text-sm text-gray-500 mt-1"></p>
                             </div>
+                            <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
+                        </div>
+                    </div>
+                    <!-- Miễn đóng phí 3.0 -->
+                    <div class="product-section waiver-premium-section">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" class="form-checkbox waiver-premium-checkbox">
+                            <span class="text-lg font-medium text-gray-800">Miễn đóng phí 3.0</span>
+                        </label>
+                        <div class="product-options hidden mt-3 pl-8 space-y-3 border-l-2 border-gray-200">
+                            <div>
+                                <label class="font-medium text-gray-700 block mb-1">Số tiền bảo hiểm (STBH)</label>
+                                <input type="text" class="form-input waiver-premium-stbh" placeholder="VD: 500.000.000">
+                                <p class="error-message text-red-600 text-sm mt-1 hidden"></p>
+                            </div>
+                            <div class="text-right font-semibold text-aia-red fee-display min-h-[1.5rem]"></div>
                         </div>
                     </div>
                 </div>
+            </section>
 
-                <!-- NĐBH Bổ sung -->
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                    <h2 class="text-xl font-bold text-aia-red mb-4">4. Người Được Bảo Hiểm Bổ Sung</h2>
-                    <div id="supplementary-insured-container" class="space-y-6"></div>
-                    <button id="add-supp-insured-btn" class="mt-4 px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition-colors w-full text-left flex items-center space-x-2">
-                        <span>+ Thêm Người Được Bảo Hiểm Bổ Sung</span>
-                    </button>
+            <!-- Section 4: Người Được Bảo Hiểm Bổ Sung -->
+            <section id="supplementary-insured-container" class="space-y-6 bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-gray-800">4. Người Được Bảo Hiểm Bổ Sung</h2>
+                <div id="add-supp-insured-btn" class="text-center">
+                    <button class="bg-aia-red text-white px-4 py-2 rounded-lg hover:bg-red-700">+ Thêm Người Được Bảo Hiểm Bổ Sung</button>
                 </div>
-            </div>
+            </section>
 
-            <!-- Cột kết quả -->
-            <div class="lg:col-span-1">
-                <div class="bg-white p-6 rounded-lg shadow-sm border-2 border-aia-red sticky top-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">Tóm Tắt Phí Bảo Hiểm</h2>
-                    <div id="results-container" class="space-y-3 text-lg">
-                        <div class="flex justify-between items-center py-2 border-b">
-                            <span class="text-gray-600">Phí sản phẩm chính:</span>
-                            <span id="main-premium-result" class="font-bold text-gray-900">0 VNĐ</span>
-                        </div>
-                        <div id="supplementary-premiums-results"></div>
-                        <div class="flex justify-between items-center pt-4 text-xl">
-                            <span class="font-semibold text-aia-red">Tổng phí năm đầu:</span>
-                            <span id="total-premium-result" class="font-extrabold text-aia-red">0 VNĐ</span>
-                        </div>
+            <!-- Section 5: Tóm Tắt Phí Bảo Hiểm -->
+            <section class="space-y-6 bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-gray-800">Tóm Tắt Phí Bảo Hiểm</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between">
+                        <span class="font-medium text-gray-700">Phí sản phẩm chính:</span>
+                        <span id="main-fee" class="font-semibold text-aia-red">0</span>
                     </div>
-                    
-                    <div class="mt-6 space-y-4">
+                    <div class="flex justify-between">
+                        <span class="font-medium text-gray-700">Tổng phí năm đầu:</span>
+                        <span id="total-fee" class="font-semibold text-aia-red">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
                         <div>
                             <label for="target-age-input" class="font-medium text-gray-700 block mb-1">Minh họa phí đến năm (tuổi NĐBH chính)</label>
-                            <input type="number" id="target-age-input" class="form-input" placeholder="VD: 75" min="0">
+                            <input type="number" id="target-age-input" class="form-input w-24" placeholder="Tuổi">
                         </div>
-                        <button id="view-summary-btn" class="w-full bg-aia-red text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition-colors">Xem Bảng Minh Họa Chi Tiết</button>
+                        <button id="view-summary-btn" class="bg-aia-red text-white px-4 py-2 rounded-lg hover:bg-red-700">Xem Bảng Minh Họa Chi Tiết</button>
                     </div>
-
-                    <div id="error-message" class="mt-4 text-center text-red-500 font-medium min-h-[1.25rem]"></div>
                 </div>
-            </div>
-        </main>
-        
-        <footer class="text-center text-gray-500 mt-12 py-4 border-t">
-            © 2025 Bản quyền thuộc về Tập đoàn AIA (AIA Group Limited) | Công cụ chỉ mang tính chất minh họa.
-        </footer>
-    </div>
+            </section>
 
-    <div id="summary-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg shadow-xl max-w-5xl w-full max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b flex justify-between items-center sticky top-0 bg-white">
-                <h2 class="text-2xl font-bold text-aia-red">Bảng Tóm Tắt Quyền Lợi và Phí</h2>
-                <button id="close-summary-modal-btn" class="text-3xl font-light leading-none hover:text-red-600">&times;</button>
-            </div>
-            <div id="summary-content-container" class="p-6 overflow-y-auto">
+            <footer class="text-center text-gray-600 mt-8">
+                <p>© 2025 Bản quyền thuộc về Tập đoàn AIA (AIA Group Limited) | Công cụ chỉ mang tính chất minh họa.</p>
+            </footer>
+        </div>
+
+        <!-- Modal Bảng Tóm Tắt -->
+        <div id="summary-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-6 rounded-lg max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Bảng Tóm Tắt Quyền Lợi và Phí</h2>
+                <button id="close-summary-modal-btn" class="absolute top-4 right-4 text-gray-600 hover:text-gray-800">×</button>
+                <div id="summary-table"></div>
             </div>
         </div>
     </div>
 
     <script type="module" src="logic.js"></script>
-    <script type="module" src="data.js"></script>
 </body>
 </html>
