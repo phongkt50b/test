@@ -1569,38 +1569,44 @@ window.MDP3 = (function () {
     }
 
     function getPremium() {
-        if (!selectedId || !window.personFees) return 0;
+    if (!selectedId || !window.personFees) return 0;
 
-        let stbhBase = 0;
-        for (let pid in window.personFees) {
-            stbhBase += window.personFees[pid].total;
-        }
-
-        if (selectedId !== 'other' && window.personFees[selectedId]) {
-            stbhBase -= window.personFees[selectedId].supp;
-        }
-
-        let age, gender;
-        if (selectedId === 'other') {
-            const form = document.getElementById('person-container-mdp3-other');
-            const info = getCustomerInfo(form, false);
-            age = info.age;
-            gender = info.gender;
-        } else {
-            const info = getCustomerInfo(document.getElementById(selectedId), false);
-            age = info.age;
-            gender = info.gender;
-        }
-
-        const rate = findMdp3Rate(age, gender);
-        const premium = Math.round((stbhBase / 1000) * rate);
-
-        const feeDisp = document.getElementById('mdp3-fee-display');
-        if (feeDisp) feeDisp.textContent = premium > 0 ? `Phí: ${formatCurrency(premium)}` : '';
-
-        return premium;
+    // Tính STBH từ phí chính thuần + phí bổ sung
+    let stbhBase = 0;
+    for (let pid in window.personFees) {
+        stbhBase += (window.personFees[pid].mainBase || 0) + (window.personFees[pid].supp || 0);
     }
 
+    // Nếu chọn NĐBH bổ sung thì trừ phí bổ sung của họ
+    if (selectedId !== 'other' && window.personFees[selectedId]) {
+        stbhBase -= window.personFees[selectedId].supp || 0;
+    }
+
+    let age, gender;
+    if (selectedId === 'other') {
+        const form = document.getElementById('person-container-mdp3-other');
+        const info = getCustomerInfo(form, false);
+        age = info.age;
+        gender = info.gender;
+    } else {
+        const info = getCustomerInfo(document.getElementById(selectedId), false);
+        age = info.age;
+        gender = info.gender;
+    }
+
+    const rate = findMdp3Rate(age, gender);
+    const premium = Math.round((stbhBase / 1000) * rate);
+
+    // Hiển thị STBH và phí
+    const feeDisp = document.getElementById('mdp3-fee-display');
+    if (feeDisp) {
+        feeDisp.textContent = premium > 0
+            ? `STBH: ${formatCurrency(stbhBase)} | Phí: ${formatCurrency(premium)}`
+            : 'Không đủ điều kiện hoặc chưa chọn người';
+    }
+
+    return premium;
+}
     function findMdp3Rate(age, gender) {
         const genderKey = gender === 'Nữ' ? 'nu' : 'nam';
         const row = product_data.mdp3_rates.find(r => age >= r.ageMin && age <= r.ageMax);
