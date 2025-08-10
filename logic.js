@@ -471,7 +471,12 @@ function calculateAll() {
                 container.querySelector('.supplementary-products-container');
 
             // Khởi tạo dữ liệu phí của người này
-            window.personFees[container.id] = { main: isMain ? mainPremiumDisplay : 0, supp: 0, total: 0 };
+            window.personFees[container.id] = { 
+                    main: isMain ? mainPremiumDisplay : 0, 
+                    mainBase: isMain ? baseMainPremium : 0, // phí chính thuần, KHÔNG gồm extra
+                    supp: 0, 
+                    total: 0 
+                };
 
             if (!suppProductsContainer) return;
 
