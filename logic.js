@@ -1496,8 +1496,6 @@ function generateSupplementaryProductsHtml(personId) {
 // TẤT CẢ như trong file ban đầu của bạn.
 
 // Cuối file, ta thêm module MDP3:
-
-// ===== MODULE MDP3 =====
 // ===== MODULE MDP3 =====
 window.MDP3 = (function () {
     let selectedId = null;
@@ -1507,7 +1505,7 @@ window.MDP3 = (function () {
         attachListeners();
     }
 
-    // Hiện/ẩn section 5 tùy sản phẩm chính
+    // Hiện/ẩn Section 5 tùy sản phẩm chính
     function renderSection() {
         const sec = document.getElementById('mdp3-section');
         if (!sec) return;
@@ -1534,7 +1532,7 @@ window.MDP3 = (function () {
         }
     }
 
-    // Render dropdown danh sách người đủ/không đủ điều kiện
+    // Render dropdown danh sách người được bảo hiểm bổ sung hoặc "Người khác"
     function renderSelect() {
         const selectContainer = document.getElementById('mdp3-select-container');
         if (!selectContainer) return;
@@ -1567,9 +1565,9 @@ window.MDP3 = (function () {
         selectContainer.innerHTML = html;
     }
 
-    // Lắng nghe sự kiện checkbox và dropdown
+    // Gắn sự kiện cho checkbox và dropdown
     function attachListeners() {
-        // Render lại Section 5 khi đổi sản phẩm chính
+        // Render lại Section khi đổi sản phẩm chính
         document.getElementById('main-product').addEventListener('change', renderSection);
 
         document.body.addEventListener('change', function (e) {
@@ -1587,7 +1585,7 @@ window.MDP3 = (function () {
                 const otherForm = document.getElementById('mdp3-other-form');
 
                 if (selectedId === 'other') {
-                    // Render form Người khác và bọc đúng class/id để calculateAll đọc được
+                    // Render form người khác
                     otherForm.classList.remove('hidden');
                     otherForm.innerHTML = `
                         <div id="person-container-mdp3-other" class="person-container">
@@ -1595,6 +1593,10 @@ window.MDP3 = (function () {
                         </div>
                     `;
                     initPerson(document.getElementById('person-container-mdp3-other'), 'mdp3-other', true);
+
+                    // Ẩn phần sản phẩm bổ sung của "Người khác"
+                    const suppBlock = otherForm.querySelector('.mt-4');
+                    if (suppBlock) suppBlock.style.display = 'none';
 
                     // Nghe DOB để tính realtime
                     const dobInput = otherForm.querySelector('.dob-input');
@@ -1614,13 +1616,13 @@ window.MDP3 = (function () {
     function getPremium() {
         if (!selectedId || !window.personFees) return 0;
 
-        // STBH: phí chính thuần + phí bổ sung (không cộng extra premium)
+        // Tính STBH: phí chính thuần + phí bổ sung (không cộng extra premium)
         let stbhBase = 0;
         for (let pid in window.personFees) {
             stbhBase += (window.personFees[pid].mainBase || 0) + (window.personFees[pid].supp || 0);
         }
 
-        // Nếu chọn NĐBH bổ sung thì trừ phí bổ sung của họ
+        // Nếu là người bổ sung trong danh sách, trừ phí bổ sung của họ
         if (selectedId !== 'other' && window.personFees[selectedId]) {
             stbhBase -= window.personFees[selectedId].supp || 0;
         }
@@ -1632,18 +1634,19 @@ window.MDP3 = (function () {
             age = info.age;
             gender = info.gender;
 
+            // Nếu chưa có DOB hợp lệ → chỉ hiển thị STBH
             if (!age || age <= 0) {
                 document.getElementById('mdp3-fee-display').textContent =
                     `STBH: ${formatCurrency(stbhBase)} | Phí: —`;
                 return 0;
             }
-            // Không trừ ai khi là Người khác
         } else {
             const info = getCustomerInfo(document.getElementById(selectedId), false);
             age = info.age;
             gender = info.gender;
         }
 
+        // Tính phí nếu đủ tuổi
         const rate = findMdp3Rate(age, gender);
         const premium = Math.round((stbhBase / 1000) * rate);
 
