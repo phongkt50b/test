@@ -528,6 +528,7 @@ function calculateAll() {
         showError(error.message);
         updateSummaryUI({ mainPremium: 0, totalSupplementaryPremium: 0, totalPremium: 0 });
     }
+if (window.MDP3) MDP3.renderRadios();
 }
 function updateMainProductVisibility(customer) {
     const { age, daysFromBirth, gender, riskGroup } = customer;
