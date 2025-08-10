@@ -1377,7 +1377,7 @@ function updateHealthSclStbhInfo(section) {
 
 function generateSupplementaryPersonHtml(personId, count) {
     return `
-        <button class="w-full text-right text-sm text-red-600 font-semibold" onclick="this.closest('.person-container').remove(); updateSupplementaryAddButtonState(); calculateAll();">Xóa NĐBH này</button>
+        <button class="w-full text-right text-sm text-red-600 font-semibold" onclick="this.closest('.person-container').remove(); updateSupplementaryAddButtonState(); calculateAll(); if (window.MDP3) MDP3.renderRadios();">Xóa NĐBH này</button>
         <h3 class="text-lg font-bold text-gray-700 mb-2 border-t pt-4">NĐBH Bổ Sung ${count}</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
