@@ -204,6 +204,7 @@ function initSupplementaryButton() {
         initPerson(newPersonDiv, personId, true);
         updateSupplementaryAddButtonState();
         calculateAll();
+        if (window.MDP3) MDP3.renderRadios();
 
         // ===== MDP3 BỔ SUNG ===== render lại danh sách
         if (window.MDP3) MDP3.renderRadios();
