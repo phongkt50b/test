@@ -1506,6 +1506,7 @@ window.MDP3 = (function () {
         attachListeners();
     }
 
+    // Hiện/ẩn section 5 tùy sản phẩm chính
     function renderSection() {
         const sec = document.getElementById('mdp3-section');
         if (!sec) return;
@@ -1515,14 +1516,27 @@ window.MDP3 = (function () {
             return;
         }
         sec.classList.remove('hidden');
-        renderSelect();
+
+        // Thêm checkbox bật/tắt nếu chưa có
+        const container = document.getElementById('mdp3-radio-list');
+        if (container && !document.getElementById('mdp3-enable')) {
+            container.innerHTML = `
+                <div class="flex items-center space-x-2 mb-3">
+                    <input type="checkbox" id="mdp3-enable" class="form-checkbox">
+                    <label for="mdp3-enable" class="text-gray-700 font-medium">
+                        Bật Miễn đóng phí 3.0
+                    </label>
+                </div>
+                <div id="mdp3-select-container"></div>
+            `;
+        }
     }
 
+    // Render dropdown danh sách người đủ/không đủ điều kiện
     function renderSelect() {
-        const selectContainer = document.getElementById('mdp3-radio-list');
+        const selectContainer = document.getElementById('mdp3-select-container');
         if (!selectContainer) return;
 
-        // Tạo dropdown
         let html = `<select id="mdp3-person-select" class="form-select w-full mb-3">
                         <option value="">-- Chọn người --</option>`;
 
@@ -1552,18 +1566,35 @@ window.MDP3 = (function () {
         selectContainer.innerHTML = html;
     }
 
+    // Lắng nghe sự kiện tương tác
     function attachListeners() {
         document.body.addEventListener('change', function (e) {
+            // Khi bật checkbox -> load danh sách mới
+            if (e.target.id === 'mdp3-enable') {
+                if (e.target.checked) {
+                    renderSelect();
+                } else {
+                    document.getElementById('mdp3-select-container').innerHTML = '';
+                    document.getElementById('mdp3-fee-display').textContent = '';
+                }
+            }
+
+            // Khi chọn người từ dropdown
             if (e.target.id === 'mdp3-person-select') {
                 selectedId = e.target.value;
                 const otherForm = document.getElementById('mdp3-other-form');
 
                 if (selectedId === 'other') {
-                    // Render form người khác
+                    // Render form người khác và khởi tạo đầy đủ
                     otherForm.classList.remove('hidden');
                     otherForm.innerHTML = generateSupplementaryPersonHtml('mdp3-other', '—');
-                    // Khởi tạo để có input nghề + dob… hoạt động
                     initPerson(otherForm, 'mdp3-other', true);
+
+                    // Gắn listener cho DOB của Người khác để tính realtime
+                    const dobInput = otherForm.querySelector('.dob-input');
+                    dobInput?.addEventListener('input', () => {
+                        calculateAll(); // cập nhật tuổi + STBH + phí ngay
+                    });
                 } else {
                     otherForm.classList.add('hidden');
                     otherForm.innerHTML = '';
@@ -1573,6 +1604,7 @@ window.MDP3 = (function () {
         });
     }
 
+    // Tính phí MDP3 và hiển thị STBH
     function getPremium() {
         if (!selectedId || !window.personFees) return 0;
 
