@@ -85,6 +85,7 @@ function initPerson(container, personId, isSupp = false) {
 
         dobInput?.addEventListener('blur', validateMainPersonInputs);
         dobInput?.addEventListener('input', validateMainPersonInputs);
+        dobInput?.addEventListener('input', () => { if (window.MDP3) MDP3.renderRadios(); });
 
         occInput?.addEventListener('input', validateMainPersonInputs);
         occInput?.addEventListener('blur', validateMainPersonInputs);
