@@ -1507,13 +1507,12 @@ window.MDP3 = (function () {
         attachListeners();
     }
 
-    // Kiểm tra SP chính và render Section 5
+    // Hiện/ẩn section 5 tùy sản phẩm chính
     function renderSection() {
         const sec = document.getElementById('mdp3-section');
         if (!sec) return;
         const mainProduct = document.getElementById('main-product').value;
 
-        // Nếu SP chính là Trọn Tâm An → ẩn Section 5
         if (mainProduct === 'TRON_TAM_AN') {
             sec.classList.add('hidden');
             return;
@@ -1535,7 +1534,7 @@ window.MDP3 = (function () {
         }
     }
 
-    // Render drop-down danh sách người
+    // Render dropdown danh sách người đủ/không đủ điều kiện
     function renderSelect() {
         const selectContainer = document.getElementById('mdp3-select-container');
         if (!selectContainer) return;
@@ -1568,9 +1567,9 @@ window.MDP3 = (function () {
         selectContainer.innerHTML = html;
     }
 
-    // Gắn sự kiện cho checkbox và dropdown
+    // Lắng nghe sự kiện checkbox và dropdown
     function attachListeners() {
-        // Render lại section khi đổi sản phẩm chính
+        // Render lại Section 5 khi đổi sản phẩm chính
         document.getElementById('main-product').addEventListener('change', renderSection);
 
         document.body.addEventListener('change', function (e) {
@@ -1588,12 +1587,16 @@ window.MDP3 = (function () {
                 const otherForm = document.getElementById('mdp3-other-form');
 
                 if (selectedId === 'other') {
-                    // Render form Người khác
+                    // Render form Người khác và bọc đúng class/id để calculateAll đọc được
                     otherForm.classList.remove('hidden');
-                    otherForm.innerHTML = generateSupplementaryPersonHtml('mdp3-other', '—');
-                    initPerson(otherForm, 'mdp3-other', true);
+                    otherForm.innerHTML = `
+                        <div id="person-container-mdp3-other" class="person-container">
+                            ${generateSupplementaryPersonHtml('mdp3-other', '—')}
+                        </div>
+                    `;
+                    initPerson(document.getElementById('person-container-mdp3-other'), 'mdp3-other', true);
 
-                    // Đổi DOB → tính lại ngay
+                    // Nghe DOB để tính realtime
                     const dobInput = otherForm.querySelector('.dob-input');
                     dobInput?.addEventListener('input', () => {
                         calculateAll();
@@ -1629,7 +1632,6 @@ window.MDP3 = (function () {
             age = info.age;
             gender = info.gender;
 
-            // Nếu chưa có DOB hợp lệ → chỉ hiển thị STBH
             if (!age || age <= 0) {
                 document.getElementById('mdp3-fee-display').textContent =
                     `STBH: ${formatCurrency(stbhBase)} | Phí: —`;
@@ -1645,7 +1647,6 @@ window.MDP3 = (function () {
         const rate = findMdp3Rate(age, gender);
         const premium = Math.round((stbhBase / 1000) * rate);
 
-        // Hiển thị kết quả
         document.getElementById('mdp3-fee-display').textContent = premium > 0
             ? `STBH: ${formatCurrency(stbhBase)} | Phí: ${formatCurrency(premium)}`
             : `STBH: ${formatCurrency(stbhBase)} | Phí: —`;
